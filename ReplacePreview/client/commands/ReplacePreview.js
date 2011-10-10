@@ -1,7 +1,7 @@
 Type.registerNamespace("CommandsExtensions");
 
 /**
- * Implements the <c>Publish</c> command extension
+ * Implements the <c>Preview</c> command extension
  */
 CommandsExtensions.ReplacePreview = function ()
 {
@@ -11,17 +11,11 @@ CommandsExtensions.ReplacePreview = function ()
 
 /**
  * Checks whether the command is Available or not�
- * The Command will be available for administrators always.
- * If the user is not administrator, the 'Publish' command will be available when the user has rights to 'Publish' 
- * and the item(s) to be published are not Structure Groups
  * @param {Tridion.Cme.Selection} selection The current selection.
  * @param {Tridion.Cme.Pipeline} execution pipeline.
  */
 CommandsExtensions.ReplacePreview.prototype._isAvailable = function (selection, pipeline)
 {
-	if (pipeline) {
-        pipeline.stop = false;
-    }
 	return false;
 };
 

@@ -1,8 +1,14 @@
 A Project containing Tridion 2011 GUI Extensions
 
+ReplacePreview Features:
+-Removes the Preview-item from context menu and disables it from the Ribbon
+
 Currently working on:
--Hide Preview context menu item
 -Add View in Staging/Live context menu items
 
+Future enhancements:
+-Hiding the Preview from Ribbon toolbar
+
 Original Extension Manager done by Yoav Niran (http://yoavniran.wordpress.com/2011/03/30/one-extension-to-rule-them-all/)
-Hello World example from Jaime Santos Alcón used as a starting point (http://jaimesantosalcon.blogspot.com/2011/02/sdl-tridion-2011-ga-gui-extension-hello.html)
+Hello World and Hiding Commands examplse from Jaime Santos Alcï¿½n used as a starting point
+(http://jaimesantosalcon.blogspot.com/2011/02/sdl-tridion-2011-ga-gui-extension-hello.html & http://jaimesantosalcon.blogspot.com/2011/10/2011-sdl-tridion-gui-extensions.html)
