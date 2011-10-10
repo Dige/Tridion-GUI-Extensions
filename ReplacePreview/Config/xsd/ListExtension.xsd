@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="List"
+    targetNamespace="http://www.sdltridion.com/2009/GUI/extensions/List"
+    elementFormDefault="qualified"
+    xmlns="http://www.sdltridion.com/2009/GUI/extensions/List"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="listDefinition" type="listDefinitionType"/>
+
+	<xs:complexType name="listDefinitionType">
+		<xs:sequence>
+      <xs:element name="selectornamespaces" minOccurs="1" type="selectornamespacesType">
+        <xs:annotation>
+          <xs:documentation>The &apos;selectornamespaces&apos; element is the container for selection prefix-namespaceURI associations</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="rows" type="rowsdefinitionType" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;rows&apos; element is the container for row definitions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="columns" type="columnsdefinitionType" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;columns&apos; element is the container for column definitions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="translates" type="translationTable" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;translates&apos; element is the container for the translation dictionaries</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="selectornamespacesType">
+		<xs:sequence>
+      <xs:element name="namespace" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Defines a single prefix-namespaceURI association</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence/>
+          <xs:attribute name="prefix" type="xs:string" use="required"/>
+          <xs:attribute name="uri" type="xs:anyURI" use="required"/>
+        </xs:complexType>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="newItemSpecificationType">
+		<xs:sequence>
+      <xs:element name="nodeName" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="nodeNamespace" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="nodeParent" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="rowsdefinitionType">
+		<xs:sequence>
+      <xs:element name="itemSelector" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;itemSelector&apos; element defines the XPath query executed against the data to retrieve the rows for a list</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+			<xs:choice minOccurs="1" maxOccurs="1">
+        <xs:element name="titleSelector" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The &apos;titleSelector&apos; element defines the sub XPath query (appended to itemSelector) executed against the data to retrieve the title for a row</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="titleColumnId" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The &apos;titleColumnId&apos; element defines the sub XPath query (appended to itemSelector) executed against the data to retrieve the title&apos;s ID for a row</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:choice>
+      <xs:element name="idSelector" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;idSelector&apos; element defines the sub XPath query (appended to the itemSelector) executed against the data to retrieve the ID of a row</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="modifiedDateSelector" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;modifiedDateSelector&apos; element defines the sub XPath query (appended to the itemSelector) executed against the data to retrieve the last modification data of a row</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="stateSelector" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ghostSelector" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;ghostSelected&apos; element defines the sub XPath query (appended to the itemSelected) executed against the data to retrieve the &apos;IsNew&apos; of a row</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="boldSelector" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="isThumbnailPreviewSelector" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="thumbnailIconSelector" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;thumbnailIconSelector&apos; element defines the sub XPath query (appended to the itemSelector) executed against the data to retrieve the thumbnail icon name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="emptyListMessage" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the string shown if the list is empty</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="newItems" type="newItemSpecificationType" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="defaultSortField" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="columnextensiondefinitionType">
+		<xs:complexContent>
+			<xs:extension base="columnsdefinitionType">
+				<xs:attribute name="processor" use="required" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="columnsdefinitionType">
+		<xs:sequence>
+      <xs:element name="column" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Defines a single column in a list</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence/>
+          <xs:attribute name="id" type="xs:string" use="required"/>
+          <xs:attribute name="type" type="typeEnum" use="required"/>
+          <xs:attribute name="selector" type="xs:string" use="required"/>
+          <xs:attribute name="alternateSelector" type="xs:string" use="optional"/>
+          <xs:attribute name="width" type="xs:string" use="optional"/>
+          <xs:attribute name="dictionary" type="xs:string" use="optional"/>
+          <xs:attribute name="title" type="xs:string" use="optional"/>
+          <xs:attribute name="translate" type="xs:string" use="optional"/>
+          <xs:attribute name="enableresizing" type="xs:boolean" use="optional" default="true"/>
+          <xs:attribute name="enablesorting" type="xs:boolean" use="optional" default="true"/>
+          <xs:attribute name="enablefiltering" type="xs:boolean" use="optional" default="true"/>
+          <xs:attribute name="columnfilter" type="columnFilterEnum" use="optional" />
+          <xs:attribute name="path" type="xs:string" use="optional"/>
+          <xs:attribute name="extension" type="xs:string" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="typeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="checkbox"/>
+			<xs:enumeration value="icon"/>
+			<xs:enumeration value="data"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="columnFilterEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="daterange"/>
+			<xs:enumeration value="value"/>
+			<xs:enumeration value="group"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="translationTable">
+		<xs:sequence>
+      <xs:element name="translation" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Defines a translation dictionary</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="entry" minOccurs="1" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Defines a single entry in the translation dictionary</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence/>
+                <xs:attribute name="original"/>
+                <xs:attribute name="translated"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="id" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

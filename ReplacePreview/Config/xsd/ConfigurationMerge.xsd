@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EditorConfiguration"
+    targetNamespace="http://www.sdltridion.com/2009/GUI/Configuration/Merge"
+    elementFormDefault="qualified"
+    xmlns="http://www.sdltridion.com/2009/GUI/Configuration/Merge"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ext="http://www.sdltridion.com/2009/GUI/extensions"
+    xmlns:cmenu="http://www.sdltridion.com/2009/GUI/extensions/ContextMenu"
+		xmlns:cfg="http://www.sdltridion.com/2009/GUI/Configuration"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+>
+  
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/Configuration" schemaLocation=".\Configuration.xsd"/>
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/extensions" schemaLocation=".\Extensions.xsd"/>
+
+	<xs:element name="Configuration">
+    <xs:annotation>
+      <xs:documentation>The &apos;Configuration&apos; element is the root of the editor/model configuration</xs:documentation>
+    </xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+        <xs:element name="resources" type="cfg:ResourceSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;resources&apos; element is the container for resources configured in this project</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="definitionfiles" type="cfg:definitionfilesType">
+          <xs:annotation>
+            <xs:documentation>The &apos;definitionfiles&apos; element is the container for definition file patterns</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="extensions" type="ext:extensionsType">
+          <xs:annotation>
+            <xs:documentation>The &apos;extensions&apos; element is the container for extensions configured in this project</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="commands" type="cfg:CommandsSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;commands&apos; element is the container for commands configured in this project</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="contextmenus" type="cfg:ContextMenuSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;contextmenus&apos; element is the container of reusable context menu declaractions</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="localization" type="cfg:localizationSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;localization&apos; element is the container of server side resource files (.resx) that will be exposed to the client</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="settings" type="modeleditorsettingsType">
+          <xs:annotation>
+            <xs:documentation>The &apos;settings&apos; element is the container for the project specific settings</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="editurlsType">
+		<xs:sequence>
+      <xs:element name="editurl" type="itemtypeurl" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;editurl&apos; element hold a single association between an itemtype ID pattern and the view used for editing that item type</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="listdefinitionsType">
+		<xs:sequence>
+			<xs:element name="view" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;view&apos; element hold the name of the view for which this list definition is applicable. * (Asterics) means all views</xs:documentation>
+        </xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="control" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>The &apos;control&apos; element holds the name of the control for which this list definition is applicable. * (Asterics) means all controls</xs:documentation>
+              </xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+                  <xs:element name="listdefinition" type="matchurl" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                      <xs:documentation>The &apos;listdefinition&apos; element holds the path and filename of the list definition xml file to use</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+								</xs:sequence>
+                <xs:attribute name="id" use="required" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>The 'id' attribute defines the ID of a control (* for any control id)</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+          <xs:attribute name="name" use="required" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The 'name' attribute defines the Name of a view (* for all views)</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="itemiconsType">
+		<xs:sequence>
+			<xs:element name="icon" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;icon&apos; element hold a single association between an item type ID pattern and the icon to use.
+          The icon to use can use the following macro&apos;s:
+            <html:ul>
+              <html:li>{$theme}  : Defines the theme path of the editor in which this icon association is defined</html:li>
+              <html:li>{$size}   : The &apos;size&apos; parameter provided in the icon.png URL request</html:li>
+              <html:li>{$width}  : The &apos;width&apos; parameter provided in the icon.png URL request</html:li>
+              <html:li>{$height} : The &apos;height&apos; parameter provided in the icon.png URL request</html:li>
+            </html:ul>
+          </xs:documentation>
+        </xs:annotation>
+				<xs:complexType>
+          <xs:attribute name="match" use="required" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The 'match' attribute holds the pattern used to check against item type ID's</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="path" use="required" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The 'path' attribute holds the replacement URL to retrieve the icon</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="modeleditorsettingsType">
+		<xs:choice>
+			<xs:sequence minOccurs="1" maxOccurs="1">
+				<xs:element name="dependencies" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>The &apos;dependencies&apos; element is the container for dependencies on other resource groups</xs:documentation>
+          </xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+              <xs:element name="editor" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>The &apos;editor&apos; element contains the name of the editor</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+        <xs:element name="defaultpage">
+          <xs:annotation>
+            <xs:documentation>Defines the default page URL. This is the URL to which is navigated to when the root website is accessed</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="navigatorurl" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Defines the default navigation URL. This is the URL to which is navigated to when the client side opens the &apos;navigator page&apos;</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="editurls" type="editurlsType">
+          <xs:annotation>
+            <xs:documentation>The &apos;editurls&apos; element is the container for item type to editing view associations</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="listdefinitions" type="listdefinitionsType">
+          <xs:annotation>
+            <xs:documentation>The &apos;listdefinitions&apos; element is the container for view/control to list definition file associations</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="itemicons" type="itemiconsType" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>The &apos;itemicons&apos; element is the container for item type ID patterns to icon associations</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="environment" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>The &apos;environment&apos; element is the container for user defined environments association to a resource group</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The &apos;name&apos; element defines the name of the environment</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="resourcegroup" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The &apos;resourcegroup&apos; element defines the resource group associated with this environment entry</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="theme">
+          <xs:annotation>
+            <xs:documentation>The &apos;theme&apos; element is the container for the theme settings in this project</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="path" type="xs:string">
+                <xs:annotation>
+                  <xs:documentation>The &apos;path&apos; element defines the root of the &apos;Theme&apos; (relative from the projects root)</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="resourcegroup" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>The &apos;resourcegroup&apos; element defines the resource group containing the ftheme resources</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+				<xs:element name="resourceextensions" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>The &apos;resourceextensions&apos; element is the container for resource groups</xs:documentation>
+          </xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+              <xs:element name="resourceextension" minOccurs="0" maxOccurs="unbounded" type="xs:string">
+                <xs:annotation>
+                  <xs:documentation>The &apos;resourceextension&apos; element defines the extension resource group</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+        <xs:element name="customconfiguration" type="customconfigurationType">
+          <xs:annotation>
+            <xs:documentation>The &apos;customconfiguration&apos; element hold arbitary XML which can be used by the project for custom configuration purposes</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+			<xs:sequence minOccurs="1" maxOccurs="1">
+        <xs:element name="customconfiguration" type="customconfigurationType">
+          <xs:annotation>
+            <xs:documentation>The &apos;customconfiguration&apos; element hold arbitary XML which can be used by the project for custom configuration purposes</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="itemtypeurl">
+		<xs:sequence />
+    <xs:attribute name="itemtype" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The 'itemtype' attribute holds the pattern used to match against item type ID's</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="url" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The 'url' attribute holds the view .aspx file (relative to the project's root) to be used for the matched item type</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="features" use="optional" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The 'features' attribute holds the string used to open windows on the client side</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="matchurl">
+		<xs:sequence />
+    <xs:attribute name="idmatch" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The 'idmatch' attribute holds the pattern used to match against incoming requests</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="url" use="optional" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The 'url' attribute holds the list definition file (relative to the project's root)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="handler" use="optional" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>FOR INTERNAL USE ONLY</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="customconfigurationType">
+		<xs:sequence>
+			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

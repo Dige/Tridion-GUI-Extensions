@@ -1,0 +1,825 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Configuration"
+    targetNamespace="http://www.sdltridion.com/2009/GUI/Configuration"
+    elementFormDefault="qualified"
+    xmlns="http://www.sdltridion.com/2009/GUI/Configuration"
+	xmlns:cfg="http://www.sdltridion.com/2009/GUI/Configuration"
+    xmlns:mstns="http://tempuri.org/Configuration.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ext="http://www.sdltridion.com/2009/GUI/extensions"
+    xmlns:cmenu="http://www.sdltridion.com/2009/GUI/extensions/ContextMenu">
+
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/extensions" schemaLocation=".\Extensions.xsd"/>
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/extensions/ContextMenu" schemaLocation=".\ContextMenuExtension.xsd"/>
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/extensions/List" schemaLocation=".\ListExtension.xsd"/>
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/extensions/Tree" schemaLocation=".\TreeExtension.xsd"/>
+
+	<xs:element name="Configuration">
+    <xs:annotation>
+      <xs:documentation>The &apos;Configuration&apos; element is the root element of the system configuration</xs:documentation>
+    </xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+        <xs:element name="servicemodel" type="ServiceModelSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;servicemodel&apos; section of the configuration defines the common properties for the client and server runtime (caching periods, debug flag, etc.)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="paths" type="PathSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;paths&apos; section of the configuration holds the base paths used by the Tridion Web.UI system</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="resources" type="ResourceSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;resources&apos; section of the configuration holds the resource groups and resource group extensions of the Tridion Web.UI system</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="definitionfiles" type="definitionfilesType">
+          <xs:annotation>
+            <xs:documentation>The &apos;definitionfiles&apos; section of the configuration holds the regular expressions used to identify data request files requiring preprocessing</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="extensions" type="ext:extensionsType">
+          <xs:annotation>
+            <xs:documentation>The &apos;extensions&apos; section of the configuration holds the installed extensions for editors, models, resource groups and/or data extenders</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="commands" type="CommandsSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;commands&apos; section of the configuration holds the CommandSet&apos;s available for use by the clients</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="contextmenus" type="ContextMenuSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;contextmenus&apos; section of the configuration holds ContextMenu definitions that can be reused in all editors</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="editors" type="EditorsSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;editors&apos; section of the configuration holds the installed editors in the Tridion Web.UI system</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="models" type="ModelsSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;models&apos; section of the configuration holds the installed models in the Tridion Web.UI system</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="localization" type="localizationSectionType">
+          <xs:annotation>
+            <xs:documentation>The &apos;localization&apos; section of the configuration holds the server side resources which should be exposed to the client aswell.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="definitionfilesType">
+		<xs:sequence>
+			<xs:element name="filter" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;filter&apos; element defines one entry for a regular expressions used to identify data request files requiring preprocessing</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+					<xs:sequence/>
+          <xs:attribute name="expression" use="required">
+            <xs:annotation>
+              <xs:documentation>The &apos;expression&apos; attribute holds the regular expression</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ModelsSectionType">
+		<xs:sequence>
+			<xs:element name="model" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;model&apos; section holds information about an installed model</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+					<xs:sequence>
+            <xs:element name="installpath" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>The &apos;installpath&apos; element defines the location on the physical disk where the model is located</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="configuration" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>The &apos;configuration&apos; element defines the file (and relative path from the installPath location) of the configuration file used for this model</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="vdir" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>The &apos;vdir&apos; element defines the name of the virtual directory in IIS for this model</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+					</xs:sequence>
+          <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The &apos;name&apos; element defines the name of the model (used for internal late-bound referencing)</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="localizationSectionType">
+		<xs:sequence>
+			<xs:element name="clientresource" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;clientresource&apos; element defines one entry for exposing server side resource to the client.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+					<xs:sequence/>
+          <xs:attribute name="servertype" use="required" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The &apos;servertype&apos; attribute defines the server side .Net type which holds the resources (*.resx file)</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="clientname" use="required" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The &apos;clientname&apos; attribute defines the name of the hashtable entry within the stringresources.js client where these resources will be exposed</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="EditorsSectionType">
+		<xs:sequence>
+			<xs:element name="editor" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+            <xs:element name="installpath" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>The &apos;installpath&apos; element defines the location on the physical disk where the editor is located</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="configuration" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>The &apos;configuration&apos; element defines the file (and relative path from the installPath location) of the configuration file used for this editor</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="vdir" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>The &apos;vdir&apos; element defines the name of the virtual directory in IIS for this editor</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+					</xs:sequence>
+          <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The &apos;name&apos; element defines the name of the editor (used for internal late-bound referencing)</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+    <xs:attribute name="default" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The &apos;default&apos; attribute defines which editor is considered the default editor (references the &apos;name&apos; element of one of the installed editors)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="ItemTypesSectionType">
+		<xs:sequence>
+			<xs:element name="itemtype" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;itemtype&apos; element defines a single entry of an itemtype from a domainmodel as exposed on the client </xs:documentation>
+        </xs:annotation>
+				<xs:complexType>
+					<xs:sequence/>
+          <xs:attribute name="id" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The &apos;id&apos; attribute defines a unique ID by which this itemtype will be recognized and addressable on the client</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="alias" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The &apos;alias&apos; attribute defines a unique TITLE by which this itemtype will be recognized and addressable on the client</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The &apos;name&apos; attribute defines the localized NAME which is used to display to the user when talking about the abstact item type (Like: Publication,Folder)</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="implementation" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The &apos;implementation&apos; attribute defines the javascript class name which implements the itemtype on the client</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="containedTypes" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The &apos;containedTypes&apos; attribute defines the ID&apos;s of other itemtypes which can be contained within the current item type.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="containingTypes" type="xs:string" use="optional">
+            <xs:annotation>
+              <xs:documentation>The &apos;containingTypes&apos; attribute defines the ID&apos; of other itemtypes which can contain the current item type</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+    <xs:attribute name="factory" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>The &apos;factory&apos; attribute defines the javascript class name which implements the &apos;modelrepository factory&apos; for this domain model</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="idmatch" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>The &apos;idmatch&apos; attribute defines a regular expression which will match the native ID of an item (not the itemtype ID) that belongs to the current domain model</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+
+	<xs:complexType name="modelextensionsType">
+		<xs:sequence>
+      <xs:element name="itemtypes" type="extendedItemtypesType" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;itemtypes&apos; element holds the extensions for existing item types</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="extendedItemtypesType">
+		<xs:sequence>
+			<xs:element name="itemtype" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;itemtype&apos; element holds extension information about a single existing item type</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+					<xs:sequence/>
+          <xs:attribute name="id" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The &apos;id&apos; attribute holds the itemtype ID for which this extension is intended</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="implementation" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The &apos;implementation&apos; attribute holds the javascript class name which will extend an exiting itemtype</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ExternalConfiguration">
+		<xs:sequence/>
+    <xs:attribute name="externaldefinition" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The &apos;externaldefinition&apos; attribute defines the (relative from installpath) path and filename which is to be loaded as the content of this element which defines this attribute.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="ContextMenuSectionType">
+		<xs:sequence>
+      <xs:element ref="cmenu:menudeclaration" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;menudeclaration&apos; element holds one context menu definition.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CommandsSectionType">
+		<xs:sequence>
+			<xs:element name="commandset" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;commandset&apos; section defines configured &apos;Commands&apos;</xs:documentation>
+        </xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+            <xs:element name="command" type="CommandType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>A &apos;command&apos; defines a single command that will become available to the client.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="dependencies" minOccurs="0" type="dependenciesType">
+              <xs:annotation>
+                <xs:documentation>A &apos;CommandSet&apos; might derive from another command and therefore must be included later than the command being derived from. By setting a dependency on the resource group which contains the dependant items, the system ensures the correct inclusion.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+					</xs:sequence>
+          <xs:attribute name="id" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The &apos;ID&apos; attribute of a commandset is used by resource groups to set references to</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="filesetType">
+		<xs:sequence>
+			<xs:element name="file" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A &apos;file&apos; element defines a single file in a resource group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+					<xs:sequence/>
+          <xs:attribute name="id" type="xs:string" use="optional">
+            <xs:annotation>
+              <xs:documentation>The &apos;id&apos; attribute is for internal/tool usage and does not change any runtime behavior</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="type" type="xs:string" use="optional" default="script">
+            <xs:annotation>
+              <xs:documentation>The &apos;type&apos; of file can be &apos;script&apos;,&apos;style&apos; or &apos;reference&apos;. This type defines in which merged request the file will be included</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CommandType" mixed="false">
+		<xs:sequence />
+    <xs:attribute name="name" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The &apos;name&apos; attribute defines the short name used on the client side to reference the command</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="implementation" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The &apos;implementation&apos; attribute defines the javascript classname which implements this command</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="SupportedBrowserSectionType">
+		<xs:sequence>
+			<xs:element name="browser" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;browser&apos; element defines a single supported browser entry with its regular expression</xs:documentation>
+        </xs:annotation>
+				<xs:complexType>
+					<xs:sequence />
+          <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The &apos;name&apos; attribute defines the name of the browser which can be displayed to users</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="regExp" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>The &apos;regExp&apos; attribute defines the regular expression which matches the &apos;user-agent&apos; http header</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SupportInfoSectionType">
+		<xs:sequence />
+    <xs:attribute name="email" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The &apos;email&apos; element defines the email address which can be used by editors to have a &apos;feedback&apos; functionality</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="FileMonitorType">
+		<xs:sequence />
+    <xs:attribute name="frequency" use="optional" type="xs:duration">
+      <xs:annotation>
+        <xs:documentation>The &apos;frequency&apos; attribute defines the minimum interval of server side cache invalidation. If no interval is given, or file monitoring is disabled, the interval will be set to 5 seconds.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="enabled" use="optional" type="xs:boolean">
+      <xs:annotation>
+        <xs:documentation>The &apos;enabled&apos; attribute defines wether ALL or only the main configuration file is checked for changes for cache invalidation. It does NOT turn of server side checking completely, just the depth of checking.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="PathSectionType">
+		<xs:sequence>
+      <xs:element name="Tridion.RootPath" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The &apos;RootPath&apos; defines the physical file location where the Tridion Web.UI root is located</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Tridion.CorePath" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The &apos;CorePath&apos; defines the virtual directory where the &apos;Core&apos; is located (relative from the web root)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Tridion.UploadDirectory" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The &apos;UploadDirectory&apos; defines the virtual directory where the uploaded files are placed before being persisted in the Content Manager</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Tridion.TcmXhtml.Configuration" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The &apos;TcmXHtml.Configuration&apos; defines the configuration file for TidyCom (in URL format, relative from the Core path)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Tridion.ThumbnailDirectory" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The &apos;ThumbnailDirectory&apos; defines the virtual directory where thumbnails are cached (in URL format, relative from the web root)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Tridion.PreviewDirectory" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The &apos;PreviewDirectory&apos; defines the virtual directory where binaries are published for preview purposes (Virtual directory&apos; physical path should be in sync with the Content Manager preview directory)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Tridion.HelpDirectory" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The &apos;HelpDirectory&apos; defines the virtual directory where the help files reside</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="groups">
+    <xs:annotation>
+      <xs:documentation>The groups element is the container for all Resource Groups</xs:documentation>
+    </xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+        <xs:element name="group" type="ResourceGroupType" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>A group can contain a &apos;DomainModel&apos;, &apos;CommandSet&apos; or a &apos;Generic&apos; group of resources. Group names must be unique</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:unique name="uniqueGroupName">
+			<xs:selector xpath="cfg:group"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+	</xs:element>
+
+	<xs:complexType name="ResourceSectionType">
+		<xs:sequence>
+      <xs:element name="filters" type="ResourceFiltersType" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The filters element is the container for all resource filters</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+			<xs:element name="extensiongroups" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The extensiongroups element is the container for resource depenedency linking</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+					<xs:sequence>
+						<xs:element name="extensiongroup" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>The extensiongroup element defines an resource group to be extended with new resources</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+								<xs:sequence>
+									<xs:element name="extension" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="insertafter" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation>Specifies a group to be inserted after the group being extended.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+                      <xs:attribute name="target" type="xs:string" use="required">
+                        <xs:annotation>
+                          <xs:documentation>Specifies the group being extended</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+                <xs:attribute name="name" type="xs:string" use="required">
+                  <xs:annotation>
+                    <xs:documentation>Defines the name of the extension group</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+				<xs:unique name="uniqueExtendionGroupName">
+					<xs:selector xpath="cfg:extensiongroup"/>
+					<xs:field xpath="@name"/>
+				</xs:unique>
+			</xs:element>
+			<xs:element ref="groups"/>
+		</xs:sequence>
+    <xs:attribute name="cache" type="xs:boolean">
+      <xs:annotation>
+        <xs:documentation>The cache attribute defines if caching is enabled</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="directory" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>FOR INTERNAL USE ONLY</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="domainmodelType">
+		<xs:sequence>
+      <xs:element name="itemtypes" type="ItemTypesSectionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The itemtypes element is the container for item types defined in this domain model</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="fileset" type="filesetType" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The fileset element is the container for the resource files contained within this domain model</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="services" type="servicesType" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The services element is the container for the web services exposed by this domain model</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="caching" type="cachingType" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The caching element is the container for the cache durations for the item types defined in this model</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>Defines the name of the domain model</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="servicesType">
+		<xs:sequence>
+      <xs:element name="service" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Defines a single web service entry which will be exposed to the client in JavaScript</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="cachingType">
+		<xs:sequence>
+			<xs:element name="cache" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Defines a single item type's caching configuration</xs:documentation>
+        </xs:annotation>
+				<xs:complexType>
+					<xs:sequence/>
+          <xs:attribute name="implementation" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The implementation attribute defines the client-side implementation class name</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="max-age" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>The max-age attribute defines the client-side caching period (in seconds)</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ResourceFiltersType">
+		<xs:sequence>
+      <xs:element name="filter" type="MergeFilterType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Defines a filter for resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="dependenciesType">
+		<xs:sequence>
+      <xs:element name="dependency" type="xs:string" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Defines a dependency to another resource group</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ResourceGroupType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:sequence>
+          <xs:element name="fileset" type="filesetType" minOccurs="1" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation>The &apos;fileset&apos; element is the container for resource files</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="services" type="servicesType" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation>The &apos;services&apos; element is the container for the web services in this resource group</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="dependencies" minOccurs="0" type="dependenciesType">
+            <xs:annotation>
+              <xs:documentation>The &apos;dependencies&apos; element is the container for dependencies to other resource groups</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+				</xs:sequence>
+				<xs:sequence>
+          <xs:element name="domainmodel" type="domainmodelType" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation>The &apos;domainmodel&apos; element is the container for a resource group with a domain model</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="dependencies" minOccurs="0" type="dependenciesType">
+            <xs:annotation>
+              <xs:documentation>The &apos;dependencies&apos; element is the container for dependencies to other resource groups</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+				</xs:sequence>
+			</xs:choice>
+		</xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>The 'name' attribute defines the name of the resource group (used to reference resource groups, like setting dependencies)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="description" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>The 'description' attribute defines the description of the resource group</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+		<xs:attribute name="merge" use="optional" default="never">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="always">
+						<xs:annotation>
+							<xs:documentation>
+								This option indicates that the group should always be merged (ON).
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="never">
+						<xs:annotation>
+							<xs:documentation>
+								This option indicates that the group should never be merged (OFF).
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="release">
+						<xs:annotation>
+							<xs:documentation>
+								This option indicates that the group should be merged only if the current configuration is Release.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+    <xs:attribute name="merger" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>FOR INTERNAL USE ONLY</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+		<xs:attribute name="include" use="optional" default="byreference">
+      <xs:annotation>
+        <xs:documentation>FOR INTERNAL USE ONLY</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="always">
+						<xs:annotation>
+							<xs:documentation>
+								This option indicates that the group should always be included.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="byreference">
+						<xs:annotation>
+							<xs:documentation>
+								This option indicates that the group should only be included if referenced by the TridionManager.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="MergeFilterType">
+		<xs:sequence>
+			<xs:element name="config" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;config&apos; element hold arbitrary XML that can be used as configuration by the resource filter</xs:documentation>
+        </xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:anyAttribute processContents="skip"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+    <xs:attribute name="for" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The 'for' attribute specifies the type of resources this filter is intended for ('Script' or 'Style')</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="type" use="required" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>The 'type' attribute specifies the fully qualified name of the .Net type implementing the filter</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+		<xs:attribute name="enabled" use="optional" default="merged">
+      <xs:annotation>
+        <xs:documentation>The 'enabled' attribute specifies if the filter is active in the runtime</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="always"/>
+					<xs:enumeration value="never"/>
+					<xs:enumeration value="merged"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="ServiceModelSectionType">
+		<xs:sequence>
+			<xs:element name="client">
+        <xs:annotation>
+          <xs:documentation>The &apos;client&apos; element holds the runtime settings for the client side</xs:documentation>
+        </xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+            <xs:element name="cache" type="CacheSectionType">
+              <xs:annotation>
+                <xs:documentation>The &apos;cache&apos; element is the container for the caching configuration</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="supportedbrowsers" type="SupportedBrowserSectionType">
+              <xs:annotation>
+                <xs:documentation>The &apos;supportedbrowsers&apos; element is the container for the browser considered supported in the system</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+					</xs:sequence>
+          <xs:attribute name="debug" type="xs:boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation>Defines if client side debugging is switched on or off</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="server">
+        <xs:annotation>
+          <xs:documentation>The &apos;server&apos; element holds the runtime settings for the server side</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+					<xs:sequence>
+            <xs:element name="supportinfo" type="SupportInfoSectionType">
+              <xs:annotation>
+                <xs:documentation>The &apos;supportinfo&apos; element holds information exposed to the end-user to contact a system administrator/helpdesk</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="filemonitor" type="FileMonitorType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>The &apos;filemonitor&apos; element holds the information about the server side cache invalidation interval</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+					</xs:sequence>
+          <xs:attribute name="version" use="required" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The 'version' attribute specifies the </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+					<xs:attribute name="modification" use="required" type="xs:unsignedInt">
+						<xs:annotation>
+							<xs:documentation>
+								Indicate custom modifications (added, changed or removed extensions). Increase the number to notify client browsers to update their cache.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+          <xs:attribute name="debug" type="xs:boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation>The 'debug' attribute holds the switch if debug mode is switched on/off</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CacheSectionType">
+		<xs:sequence />
+    <xs:attribute name="httpexpireduration" type="xs:duration" use="required">
+      <xs:annotation>
+        <xs:documentation>The 'httpexpireduration' defines the period for which clients will consider the received data as valid (stale allowance timeframe)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+</xs:schema>

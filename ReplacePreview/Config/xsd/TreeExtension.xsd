@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TreeExtension"
+    targetNamespace="http://www.sdltridion.com/2009/GUI/extensions/Tree"
+    elementFormDefault="qualified"
+    xmlns="http://www.sdltridion.com/2009/GUI/extensions/Tree"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="treeDefinition" type="treeDefinitionType"/>
+  
+  <xs:complexType name="treeDefinitionType">
+    <xs:sequence>
+      <xs:element name="selectornamespaces" type="selectornamespacestype" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;selectornamespaces&apos; element is the container for selection prefix-namespaceURI associations</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="nodes" type="treeNodesType" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="imagePath" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="selectornamespacestype">
+    <xs:sequence>
+      <xs:element name="namespace" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Defines a single prefix-namespaceURI association</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence />
+          <xs:attribute name="prefix" use="required"/>
+          <xs:attribute name="uri" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="treeNodesType">
+    <xs:sequence>
+      <xs:element name="rootSelector" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;itemSelector&apos; element defines the XPath query executed against the data to retrieve the root for a tree</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="rootUri" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="rootTitle" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the title of the root entry of the tree</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="rootIcon" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the icon of the root entry of the tree</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="nodeSelector" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;nodeSelector&apos; element defines the XPath query executed against the data to retrieve a child node of a tree leaf</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="idSelector" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;idSelector&apos; element defines the sub XPath (appended to nodeSelector) query executed against the data to retrieve the ID of a leaf</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="titleSelector" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;titleSelector&apos; element defines the sub XPath (appended to nodeSelector) query executed against the data to retrieve the Title of a leaf</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="iconSelector" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;iconSelector&apos; element defines the sub XPath (appended to nodeSelector) query executed against the data to retrieve the Icon of a leaf</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="attributes" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="attribute" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation></xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence/>
+                <xs:attribute name="name" type="xs:string"/>
+                <xs:attribute name="selector" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

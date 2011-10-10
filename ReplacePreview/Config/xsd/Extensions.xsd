@@ -1,0 +1,502 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Extensions"
+    targetNamespace="http://www.sdltridion.com/2009/GUI/extensions"
+    elementFormDefault="qualified"
+    xmlns="http://www.sdltridion.com/2009/GUI/extensions"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:cmenu="http://www.sdltridion.com/2009/GUI/extensions/ContextMenu"
+    xmlns:list="http://www.sdltridion.com/2009/GUI/extensions/List"
+    xmlns:tree="http://www.sdltridion.com/2009/GUI/extensions/Tree"
+	xmlns:cfg="http://www.sdltridion.com/2009/GUI/Configuration"
+    xmlns:merge="http://www.sdltridion.com/2009/GUI/Configuration/Merge"
+>
+
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/Configuration" schemaLocation=".\Configuration.xsd"/>
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/Configuration/Merge" schemaLocation=".\ConfigurationMerge.xsd"/>
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/extensions/ContextMenu" schemaLocation=".\ContextMenuExtension.xsd"/>
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/extensions/List" schemaLocation=".\ListExtension.xsd"/>
+	<xs:import namespace="http://www.sdltridion.com/2009/GUI/extensions/Tree" schemaLocation=".\TreeExtension.xsd"/>
+
+	<xs:complexType name="ViewType">
+		<xs:sequence>
+      <xs:element name="control" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;control&apos; element defines a single control entry where this extension to be included</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="condition" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <xs:attribute name="id" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="ApplyType">
+		<xs:sequence>
+      <xs:element name="view" type="ViewType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;view&apos; element defines a single view (screen.aspx) where this extension is to be included</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="evaluator" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="ControlExtensionAddType">
+		<xs:choice>
+			<xs:sequence>
+				<!-- TabControl/RibbonToolbar(Page) structure -->
+        <xs:element name="control" minOccurs="1" maxOccurs="1" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The &apos;control&apos; element hold the ASCX user control (filename, relative to root of project)</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="pagetype" minOccurs="1" maxOccurs="1" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The &apos;pagetype&apos; element hold the definition of the extension control&apos; client side name</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="dependencies" minOccurs="0" type="cfg:dependenciesType">
+          <xs:annotation>
+            <xs:documentation>The &apos;dependencies&apos; element is the container for resource group dependencies for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="apply" type="ApplyType" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>The &apos;apply&apos; element defines the applicability for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+			<xs:sequence>
+				<!-- RibbonToolbar(Group) structure -->
+        <xs:element name="group" minOccurs="1" maxOccurs="1" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The &apos;group&apos; element defines the groupname of the new group</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="dependencies" minOccurs="0" type="cfg:dependenciesType">
+          <xs:annotation>
+            <xs:documentation>The &apos;dependencies&apos; element is the container for resource group dependencies for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="apply" type="ApplyType" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>The &apos;apply&apos; element defines the applicability for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+			<xs:sequence>
+				<!-- Toolbar/RibbonToolbar(Button) structure -->
+				<xs:element name="command" minOccurs="1" maxOccurs="1" type="xs:string"/>
+				<xs:element name="title" minOccurs="1" maxOccurs="1" type="xs:string"/>
+				<xs:element name="issmallbutton" minOccurs="0" maxOccurs="1" type="xs:boolean"/>
+        <xs:element name="dependencies" minOccurs="0" type="cfg:dependenciesType">
+          <xs:annotation>
+            <xs:documentation>The &apos;dependencies&apos; element is the container for resource group dependencies for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="apply" type="ApplyType" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>The &apos;apply&apos; element defines the applicability for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+			<xs:sequence>
+				<!-- ContextMenu structure -->
+        <xs:element name="menudeclaration" minOccurs="1" maxOccurs="1" type="cmenu:ContextMenuDeclarationType">
+          <xs:annotation>
+            <xs:documentation>Defines a new context menu</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="dependencies" minOccurs="0" type="cfg:dependenciesType">
+          <xs:annotation>
+            <xs:documentation>The &apos;dependencies&apos; element is the container for resource group dependencies for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="apply" type="ApplyType" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>The &apos;apply&apos; element defines the applicability for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+			<xs:sequence>
+				<!-- Commands structure -->
+        <xs:element name="commandset" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Defines a new command set</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence/>
+            <xs:attribute name="ref" type="xs:IDREF" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dependencies" minOccurs="0" type="cfg:dependenciesType">
+          <xs:annotation>
+            <xs:documentation>The &apos;dependencies&apos; element is the container for resource group dependencies for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="apply" type="ApplyType" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>The &apos;apply&apos; element defines the applicability for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+			<xs:sequence>
+				<!-- List structure -->
+				<xs:element name="listDefinition" minOccurs="1" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+              <xs:element name="selectornamespaces" type="list:selectornamespacesType" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Defines prefix and namespaceURI associations used when retrieving list information from the data</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="columns" type="list:columnsdefinitionType" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The &apos;column&apos; element is the container for columns in the list</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="translates" type="list:translationTable" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>The &apos;translates&apos; element is the container for translation dictionaries</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+        <xs:element name="dependencies" minOccurs="0" type="cfg:dependenciesType">
+          <xs:annotation>
+            <xs:documentation>The &apos;dependencies&apos; element is the container for resource group dependencies for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="apply" type="ApplyType" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>The &apos;apply&apos; element defines the applicability for this extension</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+			</xs:sequence>
+		</xs:choice>
+		<xs:attribute name="assignid" type="xs:string" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="insertbefore" type="xs:string" use="optional"/>
+		<xs:attribute name="groupid" type="xs:string" use="optional"/>
+		<xs:attribute name="pageid" type="xs:string" use="optional"/>
+		<xs:attribute name="insertbeforegroup" type="xs:string" use="optional"/>
+		<xs:attribute name="disabled" type="xs:boolean" default="false" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="ExtensionRemoveDisableType">
+		<xs:sequence>
+      <xs:element name="listDefinition" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;listDefinition&apos; element is the container for a single list definition</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="columns">
+              <xs:annotation>
+                <xs:documentation>The &apos;columns&apos; element is the container for the columns defined in the list</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="column">
+                    <xs:annotation>
+                      <xs:documentation>The &apos;column&apos; element defines a single column</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                      <xs:sequence/>
+                      <xs:attribute name="id" type="xs:string" use="required"/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="apply" type="ApplyType" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;apply&apos; element defines the applicability for this extension</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="commandExtensionType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="commands">
+        <xs:annotation>
+          <xs:documentation>The &apos;commands&apos; element is the container for client side command definitions</xs:documentation>
+        </xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+            <xs:element name="command" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Defines a single client side command</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="name" type="xs:string" use="required">
+                  <xs:annotation>
+                    <xs:documentation>Defines the name of the command</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="extendingcommand" type="xs:string" use="required">
+                  <xs:annotation>
+                    <xs:documentation>Defines the name of the command which extends the original</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>						
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+      <xs:element name="dependencies" minOccurs="0" type="cfg:dependenciesType">
+        <xs:annotation>
+          <xs:documentation>The &apos;dependencies&apos; element is the container for resource group dependencies for this extension</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- An extension Section consists of a child "Add", a child "Remove" and a child "Disable" element -->
+	<xs:complexType name="extensionSectionType">
+		<xs:all>
+      <xs:element name="add" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;add&apos; element is the container for all extension being added to the runtime</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="extension" type="ControlExtensionAddType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Defines an extension to add to the runtime</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="remove" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The &apos;remove&apos; element is the container for all extensions being removed from the runtime</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="extension" type="ExtensionRemoveDisableType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Defines an extension to remove from the runtime</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+			<xs:element name="disable" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+            <xs:element name="extension" type="ExtensionRemoveDisableType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>Defines an extension to disable in the runtime</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+		<xs:attribute name="externaldefinition" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:element name="extensions" type="extensionsType" />
+
+	<xs:complexType name="extensionsType">
+		<xs:all>
+      <xs:element ref="editorextensions" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the editor extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="dataextenders" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the data extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="modelextensions" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the model extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="resourceextensions" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the resource group extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:all>
+	</xs:complexType>
+
+	<xs:complexType name="editorextensionType">
+		<xs:sequence>
+      <xs:element name="editurls" type="merge:editurlsType">
+        <xs:annotation>
+          <xs:documentation>Defines the item type ID pattern to edit view URL association extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="listdefinitions" type="merge:listdefinitionsType">
+        <xs:annotation>
+          <xs:documentation>Defines the item type ID pattern to list definition URL association extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="itemicons" type="merge:itemiconsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Defines the item type ID pattern to icon URL association extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="taskbars" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the taskbar extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="commands" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the extended client side commands</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="commandextensions" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the client side Command extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="contextmenus" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the Context menu extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="lists" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the List extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="tabpages" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the TabPage extensions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="toolbars" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the Toolbar extenions</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="ribbontoolbars" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Defines the RibbonToolbar extension</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+    <xs:attribute name="target" use="required">
+      <xs:annotation>
+        <xs:documentation>Defines the editor name for which these extensions are intended</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="dataextenderType">
+		<xs:sequence>
+      <xs:element name="dataextender" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Defines a data extension</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="description" minOccurs="0" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>Description of the data extension</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="type" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>Defines the .Net type (Fully qualified named) of the data extender implementation</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation>Defines the name of the data extender. This name is used in tracing, loggin and error reporting</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="editorextensionsType">
+		<xs:sequence>
+      <xs:element name="editorextension" type="editorextensionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Defines a single editor extension</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+  <xs:element name="taskbars" type="extensionSectionType">
+    <xs:annotation>
+      <xs:documentation>The &apos;taskbars&apos; element is the container for task bar extensions</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="contextmenus" type="extensionSectionType">
+    <xs:annotation>
+      <xs:documentation>The &apos;contextmenus&apos; element is the container for context menu extensions</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="commands" type="extensionSectionType">
+    <xs:annotation>
+      <xs:documentation>The &apos;commands&apos; element is the container for additional commands</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="commandextensions" type="commandExtensionType">
+    <xs:annotation>
+      <xs:documentation>The &apos;commandextensions&apos; element is the container for command extensions</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="lists" type="extensionSectionType">
+    <xs:annotation>
+      <xs:documentation>The &apos;lists&apos; element is the container for the list extensions</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="tabpages" type="extensionSectionType">
+    <xs:annotation>
+      <xs:documentation>The &apos;tabpages&apos; element is the container for the tab control extensions</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="toolbars" type="extensionSectionType">
+    <xs:annotation>
+      <xs:documentation>The &apos;toolbars&apos; element is the container for the tool bar extensions</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="ribbontoolbars" type="extensionSectionType">
+    <xs:annotation>
+      <xs:documentation>The &apos;ribbontoolbars&apos; element is the container for the RibbonToolbar extensions</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="definitionfiles" type="cfg:definitionfilesType">
+    <xs:annotation>
+      <xs:documentation>The &apos;definitionfiles&apos; element is the container for the definition files patterns</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+	<xs:element name="editorextensions" type="editorextensionsType"/>
+	<xs:element name="dataextenders" type="dataextenderType"/>
+	<xs:element name="modelextensions" type="cfg:modelextensionsType"/>
+	<xs:element name="resourceextensions">
+    <xs:annotation>
+      <xs:documentation>The &apos;resourceextensions&apos; element is the container for extensionresource groups</xs:documentation>
+    </xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="resourceextension" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

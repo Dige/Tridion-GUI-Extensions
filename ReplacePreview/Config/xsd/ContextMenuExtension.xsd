@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ContextMenuExtension"
+    targetNamespace="http://www.sdltridion.com/2009/GUI/extensions/ContextMenu"
+    elementFormDefault="qualified"
+    xmlns="http://www.sdltridion.com/2009/GUI/extensions/ContextMenu"
+    xmlns:mstns="http://tempuri.org/ContextMenuExtension.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <xs:complexType name="ContextMenuDeclarationType" mixed="false">
+    <xs:sequence>
+      <xs:element ref="ContextMenuItem" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>The &apos;ContextMenuItem&apos; element defines a single entry in a context menu</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="externaldefinition" use="optional">
+      <xs:annotation>
+        <xs:documentation>The &apos;externaldefinition&apos; attribute can be used to point to an external file instead of using the inline xml</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="ContextMenuItemType">
+    <xs:sequence>
+      <xs:element name="ContextMenuItem" type="ContextMenuItemType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Child context menu items</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>Defines the ID of the context menu item</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>Defines the Name of the context menu item</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="command" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>Defines the client side command name of the context menu entry</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="itemclassname" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>Defines a custom class name added to this context menu entry</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="disabled" type="xs:boolean" use="optional" default="false">
+      <xs:annotation>
+        <xs:documentation>Defines the state (enabled/disabled) of the context menu entry</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="type" type="xs:string" use="optional" default="menuitem">
+      <xs:annotation>
+        <xs:documentation>Defines the type of context menu entry</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    
+   </xs:complexType>
+
+  <xs:element name="ContextMenuItem" type="ContextMenuItemType"/>
+
+  <xs:element name="menudeclaration">
+    <xs:annotation>
+      <xs:documentation>The &apos;menudeclaration&apos; holds a complete context menu</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ContextMenuItem" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Child context menu items</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="externaldefinition" type="xs:string" use="optional">
+        <xs:annotation>
+          <xs:documentation>Defines an external file to use as content</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="name" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>Defines the name of the context menu</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
