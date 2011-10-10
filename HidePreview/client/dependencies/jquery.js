@@ -7463,5 +7463,4 @@ delegate = function (event)
 	//YM: to avoid conflict with the Outbound Email extension, we define a new shorthand for jQuery
 	window.$j = jQuery.noConflict(true);
 }
-
 addJquery();
