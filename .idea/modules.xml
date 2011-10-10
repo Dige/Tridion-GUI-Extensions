@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CommandsExtensions/CommandsExtensions.iml" filepath="$PROJECT_DIR$/CommandsExtensions/CommandsExtensions.iml" />
       <module fileurl="file://$PROJECT_DIR$/ExtensionManager/ExtensionManager.iml" filepath="$PROJECT_DIR$/ExtensionManager/ExtensionManager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/HidePreview/HidePreview.iml" filepath="$PROJECT_DIR$/HidePreview/HidePreview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HidePreview/ReplacePreview.iml" filepath="$PROJECT_DIR$/HidePreview/ReplacePreview.iml" />
     </modules>
   </component>
 </project>
