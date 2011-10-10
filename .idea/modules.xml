@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CommandsExtensions/CommandsExtensions.iml" filepath="$PROJECT_DIR$/CommandsExtensions/CommandsExtensions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ExtensionManager/ExtensionManager.iml" filepath="$PROJECT_DIR$/ExtensionManager/ExtensionManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HidePreview/HidePreview.iml" filepath="$PROJECT_DIR$/HidePreview/HidePreview.iml" />
+    </modules>
+  </component>
+</project>
+

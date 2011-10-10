@@ -1,0 +1,3 @@
+#ConfigManageBtn .image {background-image:url({ThemePath}/ExtensionsConfigurationManager/styles/icons/manage.png);}
+
+.minimized #ConfigManageBtn .image {background-image:url({ThemePath}/ExtensionsConfigurationManager/styles/icons/manage16.png);}
