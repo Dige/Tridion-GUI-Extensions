@@ -7,6 +7,8 @@ CommandsExtensions.ReplacePreview = function ()
 {
 	Type.enableInterface(this, "CommandsExtensions.ReplacePreview");
 	this.addInterface("Tridion.Cme.Command", ["ReplacePreview"]);
+	
+	document.write('<style>#PreviewBtn { display: none }</style>');
 };
 
 /**
