@@ -5,9 +5,11 @@ Type.registerNamespace("CommandsExtensions");
  */
 function ViewInFrontEnd(settings)
 {
+    return function() {
 	Type.enableInterface(this, settings.fullQName);
 	this.addInterface("Tridion.Cme.Command", [settings.className]);
     this.settings = settings;
+    }
 };
 
 ViewInFrontEnd.prototype._isAvailable = function (selection, pipeline)
@@ -50,5 +52,5 @@ ViewInFrontEnd.prototype._execute = function (selection, pipeline)
 };
 
 
-CommandsExtensions.ViewInStaging = new ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInStaging", className: "ViewInStaging"});
-CommandsExtensions.ViewInLive = new ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInLive", className: "ViewInLive"});
+CommandsExtensions.ViewInStaging = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInStaging", className: "ViewInStaging"});
+CommandsExtensions.ViewInLive = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInLive", className: "ViewInLive"});
