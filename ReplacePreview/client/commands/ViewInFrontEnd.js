@@ -12,17 +12,18 @@ function ViewInFrontEnd(settings)
     {
         var items = selection.getItems();
 
-        for (var i = 0, len = items.length; i < len; i++)
-        {
-            var itemId = selection.getItem(0);
-            var item = $models.getItem(itemId);
+        if(items.length > 1) {
+            return false;
+        }
+        var itemId = selection.getItem(0);
+        var item = $models.getItem(itemId);
 
-            if(item){
-                if(item.getItemType() != $const.ItemType.PAGE){
-                    return false;
-                }
+        if(item){
+            if(item.getItemType() != $const.ItemType.PAGE){
+                return false;
             }
         }
+
         if (pipeline) {
             pipeline.stop = false;
         }
