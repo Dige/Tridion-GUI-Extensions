@@ -15,7 +15,7 @@ function ViewInFrontEnd(settings)
     {
         var items = selection.getItems();
 
-        if(items.length > 1) {
+        if(items.length != 1) {
             return false;
         }
         var itemId = selection.getItem(0);
