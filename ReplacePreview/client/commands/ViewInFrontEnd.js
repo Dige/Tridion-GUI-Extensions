@@ -56,7 +56,7 @@ function ViewInFrontEnd(settings)
         }
     };
 
-    classToBeReturned._getPathAndFileNameOfPage = function(itemXml) {
+    function _getPathAndFileNameOfPage(itemXml) {
         var fileName = $xml.getInnerText(itemXml, "//tcm:Data/tcm:FileName");
         var directory = "/dummy/test/";
         //var directory = $xml.getInnerText(itemXmlOfSG, "//tcm:Data/tcm:Directory");
