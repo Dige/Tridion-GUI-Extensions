@@ -11,8 +11,7 @@ function ViewInFrontEnd(settings)
     this.settings = settings;
     }
 
-    classToBeReturned.prototype._isAvailable = function (selection, pipeline)
-    {
+    classToBeReturned.prototype._isAvailable = function (selection, pipeline) {
         var items = selection.getItems();
 
         if(items.length != 1) {
@@ -33,26 +32,44 @@ function ViewInFrontEnd(settings)
         return true;
     };
 
-
-    classToBeReturned.prototype._isEnabled = function(selection, pipeline)
-    {
+    classToBeReturned.prototype._isEnabled = function(selection, pipeline) {
         if (pipeline) {
             pipeline.stop = false;
         }
         return this._isAvailable(selection, pipeline);
     };
 
+    classToBeReturned.prototype._execute = function (selection, pipeline) {
+        var frontEndUrl = "http://www.front.end"; //Get the URL from XML based on Publication ID
+        var itemId = selection.getItem(0);
+        var item = $models.getItem(itemId);
 
-    classToBeReturned.prototype._execute = function (selection, pipeline)
-    {
+        if(item){
+            var itemXml = item.getStaticXmlDocument();
+            var path = this._getPathAndFileNameOfPage(itemXml);
+            console.log(itemXml);
+            window.open(frontEndUrl + path);
+        }
+
         if (pipeline) {
             pipeline.stop = false;
         }
     };
 
+    classToBeReturned._getPathAndFileNameOfPage = function(itemXml) {
+        var fileName = $xml.getInnerText(itemXml, "//tcm:Data/tcm:FileName");
+        var directory = "/dummy/test/";
+        //var directory = $xml.getInnerText(itemXmlOfSG, "//tcm:Data/tcm:Directory");
+        return directory + fileName;
+    }
+
     return classToBeReturned;
 };
 
 
-CommandsExtensions.ViewInStaging = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInStaging", className: "ViewInStaging"});
-CommandsExtensions.ViewInLive = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInLive", className: "ViewInLive"});
+CommandsExtensions.ViewInStaging = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInStaging",
+                                                   className: "ViewInStaging",
+                                                   urlListFile: "stagingUrls.xml"});
+CommandsExtensions.ViewInLive = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInLive",
+                                                className: "ViewInLive",
+                                                urlListFile: "liveUrls.xml"});
