@@ -10,7 +10,7 @@ CommandsExtensions.SecurePublish = function CommandsExtensions$SecurePublish()
 };
 
 /**
- * Checks whether the command is Available or notç
+ * Checks whether the command is Available or notï¿½
  * The Command will be available for administrators always.
  * If the user is not administrator, the 'Publish' command will be available when the user has rights to 'Publish' 
  * and the item(s) to be published are not Structure Groups
@@ -28,7 +28,7 @@ CommandsExtensions.SecurePublish.prototype._isAvailable = function CommandsExten
 		{
 			var itemId = selection.getItem(0);
 			
-			var item = var item = $models.getItem(itemId);
+		    var item = $models.getItem(itemId);
 			
 			if(item){
 				if(item.getItemType() == $const.ItemType.STRUCTURE_GROUP || item.getItemType() == $const.ItemType.PUBLICATION){

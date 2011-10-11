@@ -1,62 +1,52 @@
 Type.registerNamespace("CommandsExtensions");
 
-var frontEndType;
 /**
  * Implements the <c>ViewInFrontEnd</c> command extension
  */
-CommandsExtensions.ViewInStaging = function ()
+function ViewInFrontEnd(settings)
 {
-	Type.enableInterface(this, "CommandsExtensions.ViewInStaging");
-	this.addInterface("Tridion.Cme.Command", ["ViewInStaging"]);
-    frontEndType = "Staging";
+	Type.enableInterface(this, settings.fullQName);
+	this.addInterface("Tridion.Cme.Command", [settings.className]);
 
-};
-  /*
-CommandsExtensions.ViewInLive = function ()
-{
-	Type.enableInterface(this, "CommandsExtensions.ViewInFrontEnd");
-	this.addInterface("Tridion.Cme.Command", ["ViewInLive"]);
-    frontEndType = "Live";
-};  */
+    this.prototype._isAvailable = function (selection, pipeline)
+    {
+        var items = selection.getItems();
 
-/**
- * Checks whether the command is Available or not�
- * @param {Tridion.Cme.Selection} selection The current selection.
- * @param {Tridion.Cme.Pipeline} execution pipeline.
- */
-CommandsExtensions.ViewInStaging.prototype._isAvailable = function (selection, pipeline)
-{
-    if (pipeline) {
-        pipeline.stop = false;
-    }
-	return true;
+        for (var i = 0, len = items.length; i < len; i++)
+        {
+            var itemId = selection.getItem(0);
+            var item = $models.getItem(itemId);
 
-};
+            if(item){
+                if(item.getItemType() != $const.ItemType.PAGE){
+                    return false;
+                }
+            }
+        }
+        if (pipeline) {
+            pipeline.stop = false;
+        }
+        return true;
+    };
 
-/**
- * Checks whether the command is Enabled or not
- * @param {Tridion.Cme.Selection} selection The current selection.
- * @param {Tridion.Cme.Pipeline} execution pipeline.
- */
-CommandsExtensions.ViewInStaging.prototype._isEnabled = function(selection, pipeline)
-{
-	if (pipeline) {
-        pipeline.stop = false;
-    }
-	return this._isAvailable(selection, pipeline);
-};
 
-/**
- * Executes this command on the selection.
- * @param {Tridion.Cme.Selection} selection The current selection.
- * @param {Tridion.Cme.Pipeline} execution pipeline.
- */
-CommandsExtensions.ViewInStaging.prototype._execute = function (selection, pipeline)
-{
-    console.log(frontEndType);
-    if (pipeline) {
-        pipeline.stop = false;
-    }
+    this.prototype._isEnabled = function(selection, pipeline)
+    {
+        if (pipeline) {
+            pipeline.stop = false;
+        }
+        return this._isAvailable(selection, pipeline);
+    };
 
+
+    this.prototype._execute = function (selection, pipeline)
+    {
+        if (pipeline) {
+            pipeline.stop = false;
+        }
+    };
 };
 
+
+CommandsExtensions.ViewInStaging = new ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInStaging", className: "ViewInStaging"});
+CommandsExtensions.ViewInLive = new ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInLive", className: "ViewInLive"});
