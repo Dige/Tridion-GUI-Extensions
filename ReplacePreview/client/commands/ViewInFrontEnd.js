@@ -5,50 +5,52 @@ Type.registerNamespace("CommandsExtensions");
  */
 function ViewInFrontEnd(settings)
 {
-    return function() {
+    var classToBeReturned =  function() {
 	Type.enableInterface(this, settings.fullQName);
 	this.addInterface("Tridion.Cme.Command", [settings.className]);
     this.settings = settings;
     }
-};
 
-ViewInFrontEnd.prototype._isAvailable = function (selection, pipeline)
-{
-    var items = selection.getItems();
+    classToBeReturned.prototype._isAvailable = function (selection, pipeline)
+    {
+        var items = selection.getItems();
 
-    if(items.length > 1) {
-        return false;
-    }
-    var itemId = selection.getItem(0);
-    var item = $models.getItem(itemId);
-
-    if(item){
-        if(item.getItemType() != $const.ItemType.PAGE){
+        if(items.length > 1) {
             return false;
         }
-    }
+        var itemId = selection.getItem(0);
+        var item = $models.getItem(itemId);
 
-    if (pipeline) {
-        pipeline.stop = false;
-    }
-    return true;
-};
+        if(item){
+            if(item.getItemType() != $const.ItemType.PAGE){
+                return false;
+            }
+        }
 
-
-ViewInFrontEnd.prototype._isEnabled = function(selection, pipeline)
-{
-    if (pipeline) {
-        pipeline.stop = false;
-    }
-    return this._isAvailable(selection, pipeline);
-};
+        if (pipeline) {
+            pipeline.stop = false;
+        }
+        return true;
+    };
 
 
-ViewInFrontEnd.prototype._execute = function (selection, pipeline)
-{
-    if (pipeline) {
-        pipeline.stop = false;
-    }
+    classToBeReturned.prototype._isEnabled = function(selection, pipeline)
+    {
+        if (pipeline) {
+            pipeline.stop = false;
+        }
+        return this._isAvailable(selection, pipeline);
+    };
+
+
+    classToBeReturned.prototype._execute = function (selection, pipeline)
+    {
+        if (pipeline) {
+            pipeline.stop = false;
+        }
+    };
+
+    return classToBeReturned;
 };
 
 

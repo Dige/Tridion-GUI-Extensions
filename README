@@ -1,13 +1,13 @@
 A Project containing Tridion 2011 GUI Extensions
 
 ReplacePreview Features:
--Removes the Preview-item from context menu and Ribbon
+-Replaces the Preview with View In Staging/Live-buttons in context menu and Ribbon
 
 Currently working on:
--Add View in Staging/Live context menu items
+-Functionality for View In Staging/Live
 
 Future enhancements:
--Integration with Extension Manager
+-Integration with Extension Manager to select which items should be shown/hidden
 -Removing preview-box and button from inside Page View
 
 Original Extension Manager done by Yoav Niran (http://yoavniran.wordpress.com/2011/03/30/one-extension-to-rule-them-all/)
