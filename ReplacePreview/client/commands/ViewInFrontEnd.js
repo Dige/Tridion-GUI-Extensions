@@ -45,13 +45,7 @@ function ViewInFrontEnd(settings)
         var item = $models.getItem(itemId);
 
         if(item){
-            var publicationId = item.getPublication().getId();
-            _getStaticItem(item.getId())
-            var frontEndUrl = "http://www.front.end"; //Get the URL from XML based on Publication ID
-            var itemXml = item.xml;
-            var path = _getPathAndFileNameOfPage(itemXml);
-            console.log(itemXml);
-            window.open(frontEndUrl + path);
+            _getUrlAndViewInFrontEnd(item.getId())
         }
 
         if (pipeline) {
@@ -59,22 +53,19 @@ function ViewInFrontEnd(settings)
         }
     };
 
-    function _getStaticItem(itemId) {
+    function _getUrlAndViewInFrontEnd(itemId) {
         $extUtils.getStaticItem(itemId,
             function (item) //load the item info asynchronously
             {
-                console.log("Got Item");
-                console.log(item);
-                console.log(item.getStaticXmlDocument());
-
+                var publicationId = item.getPublication().getId();
+                var frontEndUrl = "http://www.front.end"; //Get the URL from XML based on Publication ID
+                var itemXml = item.getStaticXmlDocument();
+                window.open(frontEndUrl + _getPublishLocationUrl(itemXml));
             }, null, false);
     }
 
-    function _getPathAndFileNameOfPage(itemXml) {
-        var fileName = $xml.getInnerText(itemXml, "//tcm:Data/tcm:FileName");
-        var directory = "/dummy/test/";
-        //var directory = $xml.getInnerText(itemXmlOfSG, "//tcm:Data/tcm:Directory");
-        return directory + fileName;
+    function _getPublishLocationUrl(itemXml) {
+        return $xml.getInnerText(itemXml, "//tcm:Info/tcm:LocationInfo/tcm:PublishLocationUrl");
     }
 
     return classToBeReturned;
