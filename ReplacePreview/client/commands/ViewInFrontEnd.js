@@ -46,7 +46,7 @@ function ViewInFrontEnd(settings)
 
         if(item){
             var itemXml = item.getStaticXmlDocument();
-            var path = this._getPathAndFileNameOfPage(itemXml);
+            var path = _getPathAndFileNameOfPage(itemXml);
             console.log(itemXml);
             window.open(frontEndUrl + path);
         }
