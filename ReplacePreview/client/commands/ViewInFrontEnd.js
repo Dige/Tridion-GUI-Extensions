@@ -6,29 +6,31 @@ var frontEndType;
  */
 CommandsExtensions.ViewInStaging = function ()
 {
-	Type.enableInterface(this, "CommandsExtensions.ViewInFrontEnd");
+	Type.enableInterface(this, "CommandsExtensions.ViewInStaging");
 	this.addInterface("Tridion.Cme.Command", ["ViewInStaging"]);
     frontEndType = "Staging";
-};
 
+};
+  /*
 CommandsExtensions.ViewInLive = function ()
 {
 	Type.enableInterface(this, "CommandsExtensions.ViewInFrontEnd");
 	this.addInterface("Tridion.Cme.Command", ["ViewInLive"]);
     frontEndType = "Live";
-};
+};  */
 
 /**
  * Checks whether the command is Available or not�
  * @param {Tridion.Cme.Selection} selection The current selection.
  * @param {Tridion.Cme.Pipeline} execution pipeline.
  */
-CommandsExtensions.ViewInFrontEnd.prototype._isAvailable = function (selection, pipeline)
+CommandsExtensions.ViewInStaging.prototype._isAvailable = function (selection, pipeline)
 {
     if (pipeline) {
         pipeline.stop = false;
     }
 	return true;
+
 };
 
 /**
@@ -36,7 +38,7 @@ CommandsExtensions.ViewInFrontEnd.prototype._isAvailable = function (selection, 
  * @param {Tridion.Cme.Selection} selection The current selection.
  * @param {Tridion.Cme.Pipeline} execution pipeline.
  */
-CommandsExtensions.ViewInFrontEnd.prototype._isEnabled = function(selection, pipeline)
+CommandsExtensions.ViewInStaging.prototype._isEnabled = function(selection, pipeline)
 {
 	if (pipeline) {
         pipeline.stop = false;
@@ -49,7 +51,7 @@ CommandsExtensions.ViewInFrontEnd.prototype._isEnabled = function(selection, pip
  * @param {Tridion.Cme.Selection} selection The current selection.
  * @param {Tridion.Cme.Pipeline} execution pipeline.
  */
-CommandsExtensions.ViewInFrontEnd.prototype._execute = function (selection, pipeline)
+CommandsExtensions.ViewInStaging.prototype._execute = function (selection, pipeline)
 {
     console.log(frontEndType);
     if (pipeline) {
