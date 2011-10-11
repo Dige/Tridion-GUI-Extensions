@@ -40,12 +40,15 @@ function ViewInFrontEnd(settings)
     };
 
     classToBeReturned.prototype._execute = function (selection, pipeline) {
-        var frontEndUrl = "http://www.front.end"; //Get the URL from XML based on Publication ID
+
         var itemId = selection.getItem(0);
         var item = $models.getItem(itemId);
 
         if(item){
-            var itemXml = item.getStaticXmlDocument();
+            var publicationId = item.getPublication().getId();
+            _getStaticItem(item.getId())
+            var frontEndUrl = "http://www.front.end"; //Get the URL from XML based on Publication ID
+            var itemXml = item.xml;
             var path = _getPathAndFileNameOfPage(itemXml);
             console.log(itemXml);
             window.open(frontEndUrl + path);
@@ -55,6 +58,17 @@ function ViewInFrontEnd(settings)
             pipeline.stop = false;
         }
     };
+
+    function _getStaticItem(itemId) {
+        $extUtils.getStaticItem(itemId,
+            function (item) //load the item info asynchronously
+            {
+                console.log("Got Item");
+                console.log(item);
+                console.log(item.getStaticXmlDocument());
+
+            }, null, false);
+    }
 
     function _getPathAndFileNameOfPage(itemXml) {
         var fileName = $xml.getInnerText(itemXml, "//tcm:Data/tcm:FileName");
