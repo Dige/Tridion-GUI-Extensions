@@ -28,13 +28,15 @@ Extensions.Configuration.Field = function Field(name, props, options)
 	this.Name = name;
 	this.Options = options;
   
-  $.extend(this, {
+  var defaults = {
     Type: props.Type,
     AdminOnly: (props.AdminOnly ? props.AdminOnly : false),
     MultipleValue: this._setIsMultiple(props.MultipleValue),
     HelpText: props.HelpText || "",
     DefaultValue: props.Default || ""
-  }, props);
+  };
+  
+  $.extend(true, this, defaults, props);
 };
 
 Extensions.Configuration.Field.prototype._setIsMultiple = function (isMulti)
