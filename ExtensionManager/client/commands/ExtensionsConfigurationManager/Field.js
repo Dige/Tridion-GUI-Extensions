@@ -20,17 +20,23 @@
 
 Type.registerNamespace("Extensions.Configuration");
 
+(function($) {
+
 Extensions.Configuration.Field = function Field(name, props, options)
 {
 	this.Id = this._getFieldId(name);
 	this.Name = name;
 	this.Options = options;
-
-	this.Type = props.Type;
-	this.AdminOnly = (props.AdminOnly ? props.AdminOnly : false);
-	this.MultipleValue = this._setIsMultiple(props.MultipleValue);
-	this.HelpText = (props.HelpText ? props.HelpText : "");
-	this.DefaultValue = (props.Default ? props.Default : "");
+  
+  var defaults = {
+    Type: props.Type,
+    AdminOnly: (props.AdminOnly ? props.AdminOnly : false),
+    MultipleValue: this._setIsMultiple(props.MultipleValue),
+    HelpText: props.HelpText || "",
+    DefaultValue: props.Default || ""
+  };
+  
+  $.extend(true, this, defaults, props);
 };
 
 Extensions.Configuration.Field.prototype._setIsMultiple = function (isMulti)
@@ -62,3 +68,5 @@ Extensions.Configuration.Field.prototype._getFieldId = function (name)
 
 	return id;
 };
+
+})(window.$j);

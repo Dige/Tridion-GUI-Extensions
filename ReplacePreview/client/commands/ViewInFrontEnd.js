@@ -1,5 +1,7 @@
 Type.registerNamespace("CommandsExtensions");
 
+(function($) {
+
 /**
  * Implements the <c>ViewInFrontEnd</c> command extension
  */
@@ -32,7 +34,9 @@ function ViewInFrontEnd(settings)
               AdminOnly: true,
               MultipleValue: true,
               HelpText: "URL to redirect when previewing a page."
-            });
+            }, [
+              { key: 'Multiline', value: true }
+            ]);
             
             configClient.create();
           }
@@ -111,3 +115,5 @@ CommandsExtensions.ViewInStaging = ViewInFrontEnd({fullQName: "CommandsExtension
 CommandsExtensions.ViewInLive = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInLive",
                                                 className: "ViewInLive",
                                                 frontEndUrl: "http://www.frontend.com"});
+
+})(window.$j);
