@@ -80,7 +80,15 @@
 		
 		<div>{{html Description}}</div>
 	</script>
-
+	
+	<script>
+	function isMultiline(options) {
+		return window.$j.grep(options, function(item) {
+			return item.key == 'Multiline' && item.value == 'true';
+		}).length > 0;
+	}
+	</script>
+	
 	<script id="tmplFields" type="text/x-jquery-tmpl">
 
 		{{if $item.showElement($item)}}
@@ -97,7 +105,7 @@
 					<div class="setRowInputContainer">
 						<div class="setRowInput">
 						{{if Type==$extConfConsts.Types.TEXT}}
-              <textarea size="20" type="text" rel="${Type}" id="${Id}" name="${Id}" class="{{if $item.adminMode}}adminField{{else}}userField{{/if}}"/>
+							<{{if isMultiline(Options)}}textarea{{else}}input size="20" type="text"{{/if}} rel="${Type}" id="${Id}" name="${Id}" class="{{if $item.adminMode}}adminField{{else}}userField{{/if}}"/>
 						{{else Type==$extConfConsts.Types.NUMBER}}
 							<input size="20" type="text" rel="${Type}" id="${Id}" name="${Id}" class="{{if $item.adminMode}}adminField{{else}}userField{{/if}}"/>
 						{{else Type==$extConfConsts.Types.COLOR}}
