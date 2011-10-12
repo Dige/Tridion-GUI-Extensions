@@ -71,10 +71,9 @@ function ViewInFrontEnd(settings)
     classToBeReturned.prototype._execute = function (selection, pipeline) {
 
         var itemId = selection.getItem(0);
-        var item = $models.getItem(itemId);
 
         if(item){
-            _getUrlAndViewInFrontEnd(item.getId())
+            _getUrlAndViewInFrontEnd(itemId)
         }
 
         if (pipeline) {
