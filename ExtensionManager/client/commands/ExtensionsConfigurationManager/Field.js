@@ -32,8 +32,8 @@ Extensions.Configuration.Field = function Field(name, props, options)
     Type: props.Type,
     AdminOnly: (props.AdminOnly ? props.AdminOnly : false),
     MultipleValue: this._setIsMultiple(props.MultipleValue),
-    HelpText: (props.HelpText ? props.HelpText : ""),
-    DefaultValue: (props.Default ? props.Default : ""),
+    HelpText: props.HelpText || "",
+    DefaultValue: props.Default || ""
   }, props);
 };
 
