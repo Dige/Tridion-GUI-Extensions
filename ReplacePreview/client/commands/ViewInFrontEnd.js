@@ -6,11 +6,40 @@ Type.registerNamespace("CommandsExtensions");
 function ViewInFrontEnd(settings)
 {
     var classToBeReturned =  function() {
-	Type.enableInterface(this, settings.fullQName);
-	this.addInterface("Tridion.Cme.Command", [settings.className]);
-    this.settings = settings;
+      Type.enableInterface(this, settings.fullQName);
+      this.addInterface("Tridion.Cme.Command", [settings.className]);
+      this.settings = settings;
+      
+      configureExtensionManager();
     }
-
+    
+    /**
+     * Integrates with Extension Manager extension if it is present.
+     *
+     * http://yoavniran.wordpress.com/2011/04/08/programming-with-the-extensions-manager-extension/
+     */
+    function configureExtensionManager() {
+      if ($extConfManager) {
+        this._configClient = configClient = new $$ec.Client(“MyGreatNextExtension”);
+        
+        configClient.init(function (definition, loaded) {
+          if (!loaded) {
+            configClient.setTitle("Replace preview extension");
+            configClient.setDescription("Replace standard Preview functionality with a redirection to published site.");
+            
+            configClient.addField("Publishing URL", {
+              Type: $extConfConsts.Types.GROUPS,
+              AdminOnly: true,
+              MultipleValue: true,
+              HelpText: "Only show this extension for the chosen groups"
+            });
+            
+            configClient.create();
+          }
+        });
+      }
+    }
+    
     classToBeReturned.prototype._isAvailable = function (selection, pipeline) {
         var items = selection.getItems();
 
