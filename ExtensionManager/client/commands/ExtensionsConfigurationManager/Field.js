@@ -20,6 +20,8 @@
 
 Type.registerNamespace("Extensions.Configuration");
 
+(function($) {
+
 Extensions.Configuration.Field = function Field(name, props, options)
 {
 	this.Id = this._getFieldId(name);
@@ -64,3 +66,5 @@ Extensions.Configuration.Field.prototype._getFieldId = function (name)
 
 	return id;
 };
+
+})(window.$j);
