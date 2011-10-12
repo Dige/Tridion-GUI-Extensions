@@ -20,7 +20,7 @@ function ViewInFrontEnd(settings)
      */
     function configureExtensionManager() {
       if ($extConfManager) {
-        this._configClient = configClient = new $$ec.Client(“MyGreatNextExtension”);
+        this._configClient = configClient = new $$ec.Client("MyGreatNextExtension");
         
         configClient.init(function (definition, loaded) {
           if (!loaded) {
