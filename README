@@ -5,9 +5,9 @@ ReplacePreview Features:
 
 Currently working on:
 -Functionality for View In Staging/Live
+-Integration with Extension Manager to select which items should be shown/hidden
 
 Future enhancements:
--Integration with Extension Manager to select which items should be shown/hidden
 -Removing preview-box and button from inside Page View
 
 Original Extension Manager done by Yoav Niran (http://yoavniran.wordpress.com/2011/03/30/one-extension-to-rule-them-all/)

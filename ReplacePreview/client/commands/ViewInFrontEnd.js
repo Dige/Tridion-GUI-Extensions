@@ -69,7 +69,6 @@ function ViewInFrontEnd(settings)
     };
 
     classToBeReturned.prototype._execute = function (selection, pipeline) {
-
         var itemId = selection.getItem(0);
 
         if(item){
@@ -85,8 +84,10 @@ function ViewInFrontEnd(settings)
         $extUtils.getStaticItem(itemId,
             function (item) //load the item info asynchronously
             {
-                var publicationId = item.getPublication().getId();
-                var frontEndUrl = "http://www.front.end"; //Get the URL from XML based on Publication ID
+                var frontEndUrl = _getFrontEndUrlBasedOnPublicationId(item.getPublication().getId());
+                if(!frontEndUrl) {
+                    frontEndUrl = this.settings.frontEndUrl;
+                }
                 var itemXml = item.getStaticXmlDocument();
                 window.open(frontEndUrl + _getPublishLocationUrl(itemXml));
             }, null, false);
@@ -96,13 +97,17 @@ function ViewInFrontEnd(settings)
         return $xml.getInnerText(itemXml, "//tcm:Info/tcm:LocationInfo/tcm:PublishLocationUrl");
     }
 
+    function _getFrontEndUrlBasedOnPublicationId(pubId) {
+        return null; //Get the URL from XML based on Publication ID
+    }
+
     return classToBeReturned;
 };
 
 
 CommandsExtensions.ViewInStaging = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInStaging",
                                                    className: "ViewInStaging",
-                                                   urlListFile: "stagingUrls.xml"});
+                                                   frontEndUrl: "http://staging.frontend.com"});
 CommandsExtensions.ViewInLive = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInLive",
                                                 className: "ViewInLive",
-                                                urlListFile: "liveUrls.xml"});
+                                                frontEndUrl: "http://www.frontend.com"});
