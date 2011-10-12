@@ -33,8 +33,9 @@ function ViewInFrontEnd(settings)
               Type: $extConfConsts.Types.TEXT,
               AdminOnly: true,
               MultipleValue: true,
-              Multiline: true,
               HelpText: "URL to redirect when previewing a page."
+            }, {
+              Multiline: true
             });
             
             configClient.create();
