@@ -84,7 +84,7 @@
 	<script>
 	function isMultiline(options) {
 		return window.$j.grep(options, function(item) {
-			return item.key == 'Multiline' && item.value == 'true';
+			return item.key == 'Multiline' && eval(item.value);
 		}).length > 0;
 	}
 	</script>
