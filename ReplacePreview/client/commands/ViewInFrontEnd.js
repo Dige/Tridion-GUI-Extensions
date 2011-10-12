@@ -34,9 +34,9 @@ function ViewInFrontEnd(settings)
               AdminOnly: true,
               MultipleValue: true,
               HelpText: "URL to redirect when previewing a page."
-            }, {
-              Multiline: true
-            });
+            }, [
+              { key: 'Multiline', value: true }
+            ]);
             
             configClient.create();
           }
