@@ -28,10 +28,10 @@ function ViewInFrontEnd(settings)
             configClient.setDescription("Replace standard Preview functionality with a redirection to published site.");
             
             configClient.addField("Publishing URL", {
-              Type: $extConfConsts.Types.GROUPS,
+              Type: $extConfConsts.Types.TEXT,
               AdminOnly: true,
               MultipleValue: true,
-              HelpText: "Only show this extension for the chosen groups"
+              HelpText: "URL to redirect when previewing a page."
             });
             
             configClient.create();
