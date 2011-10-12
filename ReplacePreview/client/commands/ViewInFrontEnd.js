@@ -24,7 +24,7 @@ function ViewInFrontEnd(settings)
         
         configClient.init(function (definition, loaded) {
           if (!loaded) {
-            configClient.setTitle("Replace preview extension");
+            configClient.setTitle("Replace preview");
             configClient.setDescription("Replace standard Preview functionality with a redirection to published site.");
             
             configClient.addField("Publishing URL", {
