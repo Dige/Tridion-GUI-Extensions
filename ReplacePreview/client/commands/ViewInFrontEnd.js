@@ -1,5 +1,5 @@
 Type.registerNamespace("CommandsExtensions");
-
+(function($) {
 /**
  * Implements the <c>ViewInFrontEnd</c> command extension
  */
@@ -107,3 +107,4 @@ CommandsExtensions.ViewInStaging = ViewInFrontEnd({fullQName: "CommandsExtension
 CommandsExtensions.ViewInLive = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInLive",
                                                 className: "ViewInLive",
                                                 urlListFile: "liveUrls.xml"});
+})(window.$j);

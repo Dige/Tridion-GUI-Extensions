@@ -25,12 +25,14 @@ Extensions.Configuration.Field = function Field(name, props, options)
 	this.Id = this._getFieldId(name);
 	this.Name = name;
 	this.Options = options;
-
-	this.Type = props.Type;
-	this.AdminOnly = (props.AdminOnly ? props.AdminOnly : false);
-	this.MultipleValue = this._setIsMultiple(props.MultipleValue);
-	this.HelpText = (props.HelpText ? props.HelpText : "");
-	this.DefaultValue = (props.Default ? props.Default : "");
+  
+  $.extend(this, {
+    Type: props.Type,
+    AdminOnly: (props.AdminOnly ? props.AdminOnly : false),
+    MultipleValue: this._setIsMultiple(props.MultipleValue),
+    HelpText: (props.HelpText ? props.HelpText : ""),
+    DefaultValue: (props.Default ? props.Default : ""),
+  }, props);
 };
 
 Extensions.Configuration.Field.prototype._setIsMultiple = function (isMulti)

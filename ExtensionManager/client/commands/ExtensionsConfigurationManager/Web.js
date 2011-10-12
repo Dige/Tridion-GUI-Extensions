@@ -20,7 +20,7 @@ Type.registerNamespace("Extensions.Configuration");
 
 Extensions.Configuration.Web = function ()
 {
-	this._baseUrl = "/WebUI/Editors/2011extensions/server/ExtensionsConfigurationManager/services/ExtensionsManagerService.svc/json/";
+	this._baseUrl = "/WebUI/Editors/ExtensionManager/server/ExtensionsConfigurationManager/services/ExtensionsManagerService.svc/json/";
 };
 
 Extensions.Configuration.Web.prototype.test = function (success, error, state)
