@@ -97,7 +97,7 @@
 					<div class="setRowInputContainer">
 						<div class="setRowInput">
 						{{if Type==$extConfConsts.Types.TEXT}}
-							<input size="20" type="text" rel="${Type}" id="${Id}" name="${Id}" class="{{if $item.adminMode}}adminField{{else}}userField{{/if}}"/>
+              <{{if Multiline}}textarea{{else}}input{{/if}} size="20" type="text" rel="${Type}" id="${Id}" name="${Id}" class="{{if $item.adminMode}}adminField{{else}}userField{{/if}}"/>
 						{{else Type==$extConfConsts.Types.NUMBER}}
 							<input size="20" type="text" rel="${Type}" id="${Id}" name="${Id}" class="{{if $item.adminMode}}adminField{{else}}userField{{/if}}"/>
 						{{else Type==$extConfConsts.Types.COLOR}}
