@@ -296,7 +296,7 @@ Extensions.Configuration.Popups.ExtensionsManager.prototype._loadValuesToHtmlFie
 				var field = $j(item);
 				var type = field.attr("type");
 
-				if (type == "text")
+				if (type == "text" || field.is('textarea'))
 				{
 					var singleVal = fieldValue.Values[0];
 
