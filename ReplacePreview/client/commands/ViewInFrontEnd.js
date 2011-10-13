@@ -21,7 +21,7 @@ function ViewInFrontEnd(settings)
      * http://yoavniran.wordpress.com/2011/04/08/programming-with-the-extensions-manager-extension/
      */
     function configureExtensionManager() {
-      if ($extConfManager) {
+      if (typeof($extConfManager) != 'undefined') {
         this._configClient = configClient = new $$ec.Client("ReplacePreviewExtension");
         
         configClient.init(function (definition, loaded) {
