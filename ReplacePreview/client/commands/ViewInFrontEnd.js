@@ -7,12 +7,14 @@ Type.registerNamespace("CommandsExtensions");
  */
 function ViewInFrontEnd(settings)
 {
+    var FIELD_NAME = "Publishing URL";
+    
     var classToBeReturned =  function() {
       Type.enableInterface(this, settings.fullQName);
       this.addInterface("Tridion.Cme.Command", [settings.className]);
       this.settings = settings;
       
-      configureExtensionManager();
+      this.configClient = configureExtensionManager();
     }
     
     /**
@@ -22,14 +24,14 @@ function ViewInFrontEnd(settings)
      */
     function configureExtensionManager() {
       if (typeof($extConfManager) != 'undefined') {
-        this._configClient = configClient = new $$ec.Client("ReplacePreviewExtension");
+        configClient = new $$ec.Client("ReplacePreviewExtension");
         
         configClient.init(function (definition, loaded) {
           if (!loaded) {
             configClient.setTitle("Replace preview");
             configClient.setDescription("Replace standard Preview functionality with a redirection to published site.");
             
-            configClient.addField("Publishing URL", {
+            configClient.addField(FIELD_NAME, {
               Type: $extConfConsts.Types.TEXT,
               AdminOnly: true,
               MultipleValue: true,
@@ -39,6 +41,8 @@ function ViewInFrontEnd(settings)
             ]);
             
             configClient.create();
+            
+            return configClient;
           }
         });
       }
@@ -102,6 +106,9 @@ function ViewInFrontEnd(settings)
     }
 
     function _getFrontEndUrlBasedOnPublicationId(pubId) {
+        if(this.configClient) {
+          var xml = $.parseXML(configClient.getValue(FIELD_NAME));
+        }
         return null; //Get the URL from XML based on Publication ID
     }
 
