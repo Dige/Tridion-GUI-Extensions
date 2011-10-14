@@ -92,10 +92,16 @@ function ViewInFrontEnd(settings)
         $extUtils.getStaticItem(itemId,
             function (item) //load the item info asynchronously
             {
-                var frontEndUrl = _getFrontEndUrlBasedOnPublicationId(item.getPublication().getId());
+                var publicationId = item.getPublication().getId();
+                var frontEndUrl = _getFrontEndUrlBasedOnPublicationId(publicationId);
+                
                 if(!frontEndUrl) {
-                    frontEndUrl = this.settings.frontEndUrl;
+                    frontEndUrl =
+                        publicationId in fallbackConfig
+                            ? fallbackConfig[publicationId][this.settings.targetKey]
+                            : this.settings.frontEndUrl;
                 }
+                
                 var itemXml = item.getStaticXmlDocument();
                 window.open(frontEndUrl + _getPublishLocationUrl(itemXml));
             }, null, false);
@@ -107,20 +113,46 @@ function ViewInFrontEnd(settings)
 
     function _getFrontEndUrlBasedOnPublicationId(pubId) {
         if(this.configClient) {
-          var xml = $.parseXML(configClient.getValue(FIELD_NAME));
+            return _getPreviewUrlFromConfiguration(
+                $($.parseXML(configClient.getValue(FIELD_NAME))),
+                pubId,
+                this.settings.targetKey);
         }
+        
         return null; //Get the URL from XML based on Publication ID
     }
-
+    
+    /**
+     * Finds URL value in the configuration component XML.
+     */
+    function _getPreviewUrlFromConfiguration($cfg, publication, target) {
+        return $cfg
+            .find('publications:has(name:contains(' + publication + '))')
+            .find('targets:has(name:contains(' + target + '))')
+            .find('url')
+            .attr('xlink:href');
+    }
+    
     return classToBeReturned;
 };
 
+var fallbackConfig = {
+    'tcm:0-40-1': { live: 'http://live.omron.com', staging: 'http://staging.omron.com' },
+    'tcm:0-716-1': { live: 'http://dw.omron.com/live', staging: 'http://dw.omron.com/staging' }
+};
 
-CommandsExtensions.ViewInStaging = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInStaging",
-                                                   className: "ViewInStaging",
-                                                   frontEndUrl: "http://staging.frontend.com"});
-CommandsExtensions.ViewInLive = ViewInFrontEnd({fullQName: "CommandsExtensions.ViewInLive",
-                                                className: "ViewInLive",
-                                                frontEndUrl: "http://www.frontend.com"});
+CommandsExtensions.ViewInStaging = ViewInFrontEnd({
+    fullQName: "CommandsExtensions.ViewInStaging",
+    className: "ViewInStaging",
+    frontEndUrl: "http://staging.frontend.com",
+    targetKey: 'staging'
+});
+
+CommandsExtensions.ViewInLive = ViewInFrontEnd({
+    fullQName: "CommandsExtensions.ViewInLive",
+    className: "ViewInLive",
+    frontEndUrl: "http://www.frontend.com",
+    targetKey: 'live'
+});
 
 })(window.$j);
