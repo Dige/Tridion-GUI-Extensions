@@ -32,11 +32,20 @@ function ViewInFrontEnd(settings)
                     }
                     
                     var itemXml = item.getStaticXmlDocument();
-                    window.open(frontEndUrl + $this._getPublishLocationUrl(itemXml));
+                    
+                    $extUtils.getStaticItem(publicationId, function(publication) {
+                        var publicationPath = _getPublicationPath(publication.getStaticXmlDocument());
+                        window.open(frontEndUrl + _getPublishLocationUrl(itemXml).replace(publicationPath, ''));
+                    });
                 }, null, false);
         }
-
-        this._getPublishLocationUrl = function (itemXml) {
+        
+        function _getPublicationPath(publicationXml) {
+            return $(publicationXml).find('PublicationURL').text();
+        }
+        
+        
+        function _getPublishLocationUrl(itemXml) {
             return $xml.getInnerText(itemXml, "//tcm:Info/tcm:LocationInfo/tcm:PublishLocationUrl");
         }
 
