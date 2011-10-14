@@ -59,7 +59,7 @@ function ViewInFrontEnd(settings)
      */
     function configureExtensionManager() {
       if (typeof($extConfManager) != 'undefined') {
-        configClient = new $$ec.Client("ReplacePreviewExtension");
+        var configClient = new $$ec.Client("ReplacePreviewExtension");
         
         configClient.init(function (definition, loaded) {
           if (!loaded) {
@@ -76,10 +76,10 @@ function ViewInFrontEnd(settings)
             ]);
             
             configClient.create();
-            
-            return configClient;
           }
         });
+        
+        return configClient;
       }
     }
     
