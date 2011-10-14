@@ -16,12 +16,12 @@ function ViewInFrontEnd(settings)
         
         this.configClient = configureExtensionManager();
         
-        function _getUrlAndViewInFrontEnd(itemId) {
+        this._getUrlAndViewInFrontEnd = function(itemId) {
             $extUtils.getStaticItem(itemId,
                 function (item) //load the item info asynchronously
                 {
                     var publicationId = item.getPublication().getId();
-                    var frontEndUrl = _getFrontEndUrlBasedOnPublicationId(publicationId);
+                    var frontEndUrl = this._getFrontEndUrlBasedOnPublicationId(publicationId);
                     
                     if(!frontEndUrl) {
                         frontEndUrl =
@@ -31,15 +31,15 @@ function ViewInFrontEnd(settings)
                     }
                     
                     var itemXml = item.getStaticXmlDocument();
-                    window.open(frontEndUrl + _getPublishLocationUrl(itemXml));
+                    window.open(frontEndUrl + this._getPublishLocationUrl(itemXml));
                 }, null, false);
         }
 
-        function _getPublishLocationUrl(itemXml) {
+        this._getPublishLocationUrl = function (itemXml) {
             return $xml.getInnerText(itemXml, "//tcm:Info/tcm:LocationInfo/tcm:PublishLocationUrl");
         }
 
-        function _getFrontEndUrlBasedOnPublicationId(pubId) {
+        this._getFrontEndUrlBasedOnPublicationId = function (pubId) {
             if(this.configClient) {
                 return _getPreviewUrlFromConfiguration(
                     $($.parseXML(configClient.getValue(FIELD_NAME))),
@@ -114,7 +114,7 @@ function ViewInFrontEnd(settings)
         var itemId = selection.getItem(0);
 
         if(itemId){
-            _getUrlAndViewInFrontEnd(itemId)
+            this._getUrlAndViewInFrontEnd(itemId)
         }
 
         if (pipeline) {
