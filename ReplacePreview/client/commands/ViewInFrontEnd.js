@@ -43,7 +43,7 @@ function ViewInFrontEnd(settings)
         this._getFrontEndUrlBasedOnPublicationId = function (pubId) {
             if(this.configClient) {
                 return _getPreviewUrlFromConfiguration(
-                    $($.parseXML(configClient.getValue(FIELD_NAME))),
+                    $($.parseXML(this.configClient.getValue(FIELD_NAME))),
                     pubId,
                     this.settings.targetKey);
             }
