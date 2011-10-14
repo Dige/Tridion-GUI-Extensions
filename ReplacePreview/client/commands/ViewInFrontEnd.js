@@ -17,21 +17,22 @@ function ViewInFrontEnd(settings)
         this.configClient = configureExtensionManager();
         
         this._getUrlAndViewInFrontEnd = function(itemId) {
+            var $this = this;
             $extUtils.getStaticItem(itemId,
                 function (item) //load the item info asynchronously
                 {
                     var publicationId = item.getPublication().getId();
-                    var frontEndUrl = this._getFrontEndUrlBasedOnPublicationId(publicationId);
+                    var frontEndUrl = $this._getFrontEndUrlBasedOnPublicationId(publicationId);
                     
                     if(!frontEndUrl) {
                         frontEndUrl =
                             publicationId in fallbackConfig
-                                ? fallbackConfig[publicationId][this.settings.targetKey]
-                                : this.settings.frontEndUrl;
+                                ? fallbackConfig[publicationId][$this.settings.targetKey]
+                                : $this.settings.frontEndUrl;
                     }
                     
                     var itemXml = item.getStaticXmlDocument();
-                    window.open(frontEndUrl + this._getPublishLocationUrl(itemXml));
+                    window.open(frontEndUrl + $this._getPublishLocationUrl(itemXml));
                 }, null, false);
         }
 
