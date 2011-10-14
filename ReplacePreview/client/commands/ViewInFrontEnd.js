@@ -79,7 +79,7 @@ function ViewInFrontEnd(settings)
     classToBeReturned.prototype._execute = function (selection, pipeline) {
         var itemId = selection.getItem(0);
 
-        if(item){
+        if(itemId){
             _getUrlAndViewInFrontEnd(itemId)
         }
 
