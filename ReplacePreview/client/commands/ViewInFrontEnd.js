@@ -10,11 +10,45 @@ function ViewInFrontEnd(settings)
     var FIELD_NAME = "Publishing URL";
     
     var classToBeReturned =  function() {
-      Type.enableInterface(this, settings.fullQName);
-      this.addInterface("Tridion.Cme.Command", [settings.className]);
-      this.settings = settings;
-      
-      this.configClient = configureExtensionManager();
+        Type.enableInterface(this, settings.fullQName);
+        this.addInterface("Tridion.Cme.Command", [settings.className]);
+        this.settings = settings;
+        
+        this.configClient = configureExtensionManager();
+        
+        function _getUrlAndViewInFrontEnd(itemId) {
+            $extUtils.getStaticItem(itemId,
+                function (item) //load the item info asynchronously
+                {
+                    var publicationId = item.getPublication().getId();
+                    var frontEndUrl = _getFrontEndUrlBasedOnPublicationId(publicationId);
+                    
+                    if(!frontEndUrl) {
+                        frontEndUrl =
+                            publicationId in fallbackConfig
+                                ? fallbackConfig[publicationId][this.settings.targetKey]
+                                : this.settings.frontEndUrl;
+                    }
+                    
+                    var itemXml = item.getStaticXmlDocument();
+                    window.open(frontEndUrl + _getPublishLocationUrl(itemXml));
+                }, null, false);
+        }
+
+        function _getPublishLocationUrl(itemXml) {
+            return $xml.getInnerText(itemXml, "//tcm:Info/tcm:LocationInfo/tcm:PublishLocationUrl");
+        }
+
+        function _getFrontEndUrlBasedOnPublicationId(pubId) {
+            if(this.configClient) {
+                return _getPreviewUrlFromConfiguration(
+                    $($.parseXML(configClient.getValue(FIELD_NAME))),
+                    pubId,
+                    this.settings.targetKey);
+            }
+            
+            return null; //Get the URL from XML based on Publication ID
+        }
     }
     
     /**
@@ -87,40 +121,6 @@ function ViewInFrontEnd(settings)
             pipeline.stop = false;
         }
     };
-
-    function _getUrlAndViewInFrontEnd(itemId) {
-        $extUtils.getStaticItem(itemId,
-            function (item) //load the item info asynchronously
-            {
-                var publicationId = item.getPublication().getId();
-                var frontEndUrl = _getFrontEndUrlBasedOnPublicationId(publicationId);
-                
-                if(!frontEndUrl) {
-                    frontEndUrl =
-                        publicationId in fallbackConfig
-                            ? fallbackConfig[publicationId][this.settings.targetKey]
-                            : this.settings.frontEndUrl;
-                }
-                
-                var itemXml = item.getStaticXmlDocument();
-                window.open(frontEndUrl + _getPublishLocationUrl(itemXml));
-            }, null, false);
-    }
-
-    function _getPublishLocationUrl(itemXml) {
-        return $xml.getInnerText(itemXml, "//tcm:Info/tcm:LocationInfo/tcm:PublishLocationUrl");
-    }
-
-    function _getFrontEndUrlBasedOnPublicationId(pubId) {
-        if(this.configClient) {
-            return _getPreviewUrlFromConfiguration(
-                $($.parseXML(configClient.getValue(FIELD_NAME))),
-                pubId,
-                this.settings.targetKey);
-        }
-        
-        return null; //Get the URL from XML based on Publication ID
-    }
     
     /**
      * Finds URL value in the configuration component XML.
