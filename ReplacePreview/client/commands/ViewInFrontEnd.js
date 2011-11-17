@@ -147,8 +147,8 @@ function ViewInFrontEnd(settings)
 };
 
 var fallbackConfig = {
-    'tcm:0-40-1': { live: 'http://live.omron.com', staging: 'http://staging.omron.com' },
-    'tcm:0-716-1': { live: 'http://dw.omron.com/live', staging: 'http://dw.omron.com/staging' }
+    'tcm:0-40-1': { live: 'http://live.site.com', staging: 'http://staging.site.com' },
+    'tcm:0-716-1': { live: 'http://site.com/live', staging: 'http://site.com/staging' }
 };
 
 CommandsExtensions.ViewInStaging = ViewInFrontEnd({
