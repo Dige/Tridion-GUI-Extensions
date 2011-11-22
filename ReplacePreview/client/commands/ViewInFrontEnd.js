@@ -34,17 +34,15 @@ function ViewInFrontEnd(settings)
                     var itemXml = item.getStaticXmlDocument();
                     
                     $extUtils.getStaticItem(publicationId, function(publication) {
-                        var publicationPath = _getPublicationPath(publication.getStaticXmlDocument());
-                        window.open(frontEndUrl + _getPublishLocationUrl(itemXml).replace(publicationPath, ''));
+			var pubLocationUrl =  _getPublishLocationUrl(itemXml);
+			if(this.settings.rewriteFileExtension) {
+				pubLocationUrl = pubLocationUrl.replace(new RegExp("\.[^.]*$","i"),this.settings.rewriteFileExtension);
+			}
+                        window.open(frontEndUrl + pubLocationUrl);
                     });
                 }, null, false);
         }
-        
-        function _getPublicationPath(publicationXml) {
-            return $(publicationXml).find('PublicationURL').text();
-        }
-        
-        
+
         function _getPublishLocationUrl(itemXml) {
             return $xml.getInnerText(itemXml, "//tcm:Info/tcm:LocationInfo/tcm:PublishLocationUrl");
         }
@@ -52,7 +50,7 @@ function ViewInFrontEnd(settings)
         this._getFrontEndUrlBasedOnPublicationId = function (pubId) {
             if(this.configClient) {
                 return _getPreviewUrlFromConfiguration(
-                    $($.parseXML(this.configClient.getValue(FIELD_NAME))),
+                    $($j.parseXML(this.configClient.getValue(FIELD_NAME))),
                     pubId,
                     this.settings.targetKey);
             }
@@ -63,7 +61,7 @@ function ViewInFrontEnd(settings)
     
     /**
      * Integrates with Extension Manager extension if it is present.
-     *
+     * NOTE: Extension Manager doesn't currently work with 2011 SP1
      * http://yoavniran.wordpress.com/2011/04/08/programming-with-the-extensions-manager-extension/
      */
     function configureExtensionManager() {
@@ -155,14 +153,16 @@ CommandsExtensions.ViewInStaging = ViewInFrontEnd({
     fullQName: "CommandsExtensions.ViewInStaging",
     className: "ViewInStaging",
     frontEndUrl: "http://staging.frontend.com",
-    targetKey: 'staging'
+    targetKey: 'staging',
+    rewriteFileExtension: ".html"
 });
 
 CommandsExtensions.ViewInLive = ViewInFrontEnd({
     fullQName: "CommandsExtensions.ViewInLive",
     className: "ViewInLive",
     frontEndUrl: "http://www.frontend.com",
-    targetKey: 'live'
+    targetKey: 'live',
+    rewriteFileExtension: ".html"
 });
 
 })(window.$j);
