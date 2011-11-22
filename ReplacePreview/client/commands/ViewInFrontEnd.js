@@ -35,8 +35,8 @@ function ViewInFrontEnd(settings)
                     
                     $extUtils.getStaticItem(publicationId, function(publication) {
 			var pubLocationUrl =  _getPublishLocationUrl(itemXml);
-			if(this.settings.rewriteFileExtension) {
-				pubLocationUrl = pubLocationUrl.replace(new RegExp("\.[^.]*$","i"),this.settings.rewriteFileExtension);
+			if($this.settings.rewriteFileExtension) {
+				pubLocationUrl = pubLocationUrl.replace(new RegExp("\.[^.]*$","i"),$this.settings.rewriteFileExtension);
 			}
                         window.open(frontEndUrl + pubLocationUrl);
                     });
